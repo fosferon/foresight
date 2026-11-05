@@ -1,0 +1,106 @@
+{
+  "edges": [
+    {
+      "data": {
+        "color": "#ff69b4",
+        "entityName": "",
+        "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5-dcf8e008-9f4e-4e74-8472-fe480d81c1c5-semantic",
+        "lineStyle": "solid",
+        "linkType": "semantic",
+        "source": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+        "target": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+        "weight": 1.0
+      }
+    },
+    {
+      "data": {
+        "color": "#ff69b4",
+        "entityName": "",
+        "id": "b640a88d-64e0-45d2-aba7-544ba73032e0-dcf8e008-9f4e-4e74-8472-fe480d81c1c5-semantic",
+        "lineStyle": "solid",
+        "linkType": "semantic",
+        "source": "b640a88d-64e0-45d2-aba7-544ba73032e0",
+        "target": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+        "weight": 1.0
+      }
+    },
+    {
+      "data": {
+        "color": "#ff69b4",
+        "entityName": "",
+        "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5-b640a88d-64e0-45d2-aba7-544ba73032e0-semantic",
+        "lineStyle": "solid",
+        "linkType": "semantic",
+        "source": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+        "target": "b640a88d-64e0-45d2-aba7-544ba73032e0",
+        "weight": 1.0
+      }
+    }
+  ],
+  "limit": 10,
+  "nodes": [
+    {
+      "data": {
+        "color": "#42a5f5",
+        "context": "",
+        "date": "2026-06-24T19:32:58.649395+00:00",
+        "entities": "Alice, Athens, Bob",
+        "id": "b640a88d-64e0-45d2-aba7-544ba73032e0",
+        "label": "Alice met Bob in Athens.",
+        "text": "Alice met Bob in Athens."
+      }
+    },
+    {
+      "data": {
+        "color": "#42a5f5",
+        "context": "chat",
+        "date": "2026-06-24T19:32:58.649395+00:00",
+        "entities": "Alice, Athens, Bob",
+        "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+        "label": "Alice met Bob in Athens. | Inv...",
+        "text": "Alice met Bob in Athens. | Involving: Alice, Bob"
+      }
+    }
+  ],
+  "table_rows": [
+    {
+      "chunk_id": null,
+      "context": "N/A",
+      "created_at": "2026-06-24T19:33:03.822812+00:00",
+      "date": "2026-06-24 19:32",
+      "document_id": null,
+      "entities": "Alice, Athens, Bob",
+      "fact_type": "observation",
+      "id": "b640a88d-64e0-45d2-aba7-544ba73032e0",
+      "mentioned_at": "2026-06-24T19:32:58.649395+00:00",
+      "occurred_end": null,
+      "occurred_start": null,
+      "proof_count": 1,
+      "tags": [
+        "beta",
+        "alpha"
+      ],
+      "text": "Alice met Bob in Athens."
+    },
+    {
+      "chunk_id": "foresight-floor_doc-7_0",
+      "context": "chat",
+      "created_at": "2026-06-24T19:33:01.472732+00:00",
+      "date": "2026-06-24 19:32",
+      "document_id": "doc-7",
+      "entities": "Alice, Athens, Bob",
+      "fact_type": "world",
+      "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+      "mentioned_at": "2026-06-24T19:32:58.649395+00:00",
+      "occurred_end": null,
+      "occurred_start": null,
+      "proof_count": 1,
+      "tags": [
+        "beta",
+        "alpha"
+      ],
+      "text": "Alice met Bob in Athens. | Involving: Alice, Bob"
+    }
+  ],
+  "total_units": 2
+}

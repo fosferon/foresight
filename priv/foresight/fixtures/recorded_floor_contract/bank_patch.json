@@ -1,0 +1,11 @@
+{
+  "background": "patched mission",
+  "bank_id": "foresight-floor",
+  "disposition": {
+    "empathy": 3,
+    "literalism": 3,
+    "skepticism": 3
+  },
+  "mission": "patched mission",
+  "name": "Foresight FLOOR"
+}

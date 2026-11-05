@@ -1,0 +1,13 @@
+[
+  {
+    "previous_content": "Sentiment was mixed.",
+    "changed_at": "2026-06-01T09:30:00Z",
+    "previous_reflect_response": {
+      "based_on": {
+        "memories": [],
+        "mental_models": [],
+        "directives": []
+      }
+    }
+  }
+]

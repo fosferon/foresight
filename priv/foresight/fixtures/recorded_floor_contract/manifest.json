@@ -1,0 +1,350 @@
+{
+  "authority": {
+    "base_url": "http://127.0.0.1:8890",
+    "package": "hindsight-api-slim==0.7.1",
+    "version": "0.7.1"
+  },
+  "fixtures": [
+    {
+      "method": "GET",
+      "name": "health.json",
+      "path": "/health",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "version.json",
+      "path": "/version",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "name": "bank_put.json",
+      "path": "/v1/default/banks/foresight-floor",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "banks_list.json",
+      "path": "/v1/default/banks",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "bank_stats.json",
+      "path": "/v1/default/banks/foresight-floor/stats",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "bank_profile.json",
+      "path": "/v1/default/banks/foresight-floor/profile",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "name": "bank_patch.json",
+      "path": "/v1/default/banks/foresight-floor",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "retain_async.json",
+      "path": "/v1/default/banks/foresight-floor/memories",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "consolidate_trigger.json",
+      "path": "/v1/default/banks/foresight-floor/consolidate",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "files_retain.json",
+      "path": "/v1/default/banks/foresight-floor/files/retain",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "recall.json",
+      "path": "/v1/default/banks/foresight-floor/memories/recall",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "reflect.json",
+      "path": "/v1/default/banks/foresight-floor/reflect",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "memories_list.json",
+      "path": "/v1/default/banks/foresight-floor/memories/list?limit=5&offset=2&q=hello&type=note",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "memory_get.json",
+      "path": "/v1/default/banks/foresight-floor/memories/dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "memory_history.json",
+      "path": "/v1/default/banks/foresight-floor/memories/dcf8e008-9f4e-4e74-8472-fe480d81c1c5/history",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "entities_list.json",
+      "path": "/v1/default/banks/foresight-floor/entities?limit=3&offset=1",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "entity_graph.json",
+      "path": "/v1/default/banks/foresight-floor/entities/graph?limit=10&min_count=1",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "entity_get.json",
+      "path": "/v1/default/banks/foresight-floor/entities/4794eea0-bb11-4bf2-b085-d40c1edde4c3",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "entity_regenerate_gone.json",
+      "path": "/v1/default/banks/foresight-floor/entities/4794eea0-bb11-4bf2-b085-d40c1edde4c3/regenerate",
+      "recorded_from_live": true,
+      "status": 410
+    },
+    {
+      "method": "GET",
+      "name": "documents_list.json",
+      "path": "/v1/default/banks/foresight-floor/documents?q=doc-7&tags%5B%5D=alpha&tags%5B%5D=beta",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "document_get.json",
+      "path": "/v1/default/banks/foresight-floor/documents/doc-7",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "document_chunks.json",
+      "path": "/v1/default/banks/foresight-floor/documents/doc-7/chunks?limit=10&offset=0",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "name": "document_patch.json",
+      "path": "/v1/default/banks/foresight-floor/documents/doc-7",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "document_reprocess.json",
+      "path": "/v1/default/banks/foresight-floor/documents/doc-7/reprocess",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "memory_graph.json",
+      "path": "/v1/default/banks/foresight-floor/graph?limit=10",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "chunk_get.json",
+      "path": "/v1/default/chunks/foresight-floor_doc-7_0?bank_id=foresight-floor",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "name": "document_delete.json",
+      "path": "/v1/default/banks/foresight-floor/documents/doc-7",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "name": "clear_observations.json",
+      "path": "/v1/default/banks/foresight-floor/observations",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "name": "clear_memory_observations.json",
+      "path": "/v1/default/banks/foresight-floor/memories/dcf8e008-9f4e-4e74-8472-fe480d81c1c5/observations",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "name": "clear_memories.json",
+      "path": "/v1/default/banks/foresight-floor/memories",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "name": "bank_delete.json",
+      "path": "/v1/default/banks/foresight-floor",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "name": "webhook_create.json",
+      "path": "/v1/default/banks/foresight-floor/webhooks",
+      "recorded_from_live": true,
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "name": "webhooks_list.json",
+      "path": "/v1/default/banks/foresight-floor/webhooks",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "name": "webhook_patch.json",
+      "path": "/v1/default/banks/foresight-floor/webhooks/f50a9b4d-6d1f-4e2d-9162-e8a451361e15",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "name": "webhook_deliveries_list.json",
+      "path": "/v1/default/banks/foresight-floor/webhooks/f50a9b4d-6d1f-4e2d-9162-e8a451361e15/deliveries?limit=10",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "name": "webhook_delete.json",
+      "path": "/v1/default/banks/foresight-floor/webhooks/f50a9b4d-6d1f-4e2d-9162-e8a451361e15",
+      "recorded_from_live": true,
+      "status": 200
+    },
+    {
+      "name": "directives_list.json",
+      "method": "GET",
+      "path": "/v1/default/banks/foresight-floor/directives",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "directive_create.json",
+      "method": "POST",
+      "path": "/v1/default/banks/foresight-floor/directives",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "directive_get.json",
+      "method": "GET",
+      "path": "/v1/default/banks/foresight-floor/directives/43661200-3c74-41bc-bc20-17a0ead3253a",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "directive_patch.json",
+      "method": "PATCH",
+      "path": "/v1/default/banks/foresight-floor/directives/43661200-3c74-41bc-bc20-17a0ead3253a",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "directive_delete.json",
+      "method": "DELETE",
+      "path": "/v1/default/banks/foresight-floor/directives/43661200-3c74-41bc-bc20-17a0ead3253a",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_models_list.json",
+      "method": "GET",
+      "path": "/v1/default/banks/foresight-floor/mental-models",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_model_create.json",
+      "method": "POST",
+      "path": "/v1/default/banks/foresight-floor/mental-models",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_model_get.json",
+      "method": "GET",
+      "path": "/v1/default/banks/foresight-floor/mental-models/fixture-mental-model",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_model_history.json",
+      "method": "GET",
+      "path": "/v1/default/banks/foresight-floor/mental-models/fixture-mental-model/history",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_model_refresh.json",
+      "method": "POST",
+      "path": "/v1/default/banks/foresight-floor/mental-models/fixture-mental-model/refresh",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_model_patch.json",
+      "method": "PATCH",
+      "path": "/v1/default/banks/foresight-floor/mental-models/fixture-mental-model",
+      "status": 200,
+      "recorded_from_live": true
+    },
+    {
+      "name": "mental_model_delete.json",
+      "method": "DELETE",
+      "path": "/v1/default/banks/foresight-floor/mental-models/fixture-mental-model",
+      "status": 200,
+      "recorded_from_live": true
+    }
+  ],
+  "recorded_at": "2026-07-02T08:25:59Z",
+  "tier_tags": [
+    "tier2",
+    "nightly"
+  ]
+}

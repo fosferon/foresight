@@ -1,0 +1,28 @@
+{
+  "bank_id": "foresight-floor",
+  "content": "Generating content...",
+  "created_at": "2026-07-02T08:25:12.316702+00:00",
+  "id": "fixture-mental-model",
+  "is_stale": null,
+  "last_refreshed_at": "2026-07-02T08:25:12.316702+00:00",
+  "max_tokens": 1024,
+  "name": "Fixture Mental Model Updated",
+  "reflect_response": null,
+  "source_query": "What do we know about the seeded alpha memory?",
+  "tags": [
+    "alpha",
+    "beta"
+  ],
+  "trigger": {
+    "exclude_mental_model_ids": null,
+    "exclude_mental_models": false,
+    "fact_types": null,
+    "include_chunks": null,
+    "mode": "full",
+    "recall_chunks_max_tokens": null,
+    "recall_max_tokens": null,
+    "refresh_after_consolidation": true,
+    "tag_groups": null,
+    "tags_match": null
+  }
+}

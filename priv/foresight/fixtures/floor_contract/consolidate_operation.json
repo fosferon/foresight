@@ -1,0 +1,29 @@
+{
+  "operation_id": "1",
+  "status": "completed",
+  "operation_type": "consolidate",
+  "created_at": "<timestamp>",
+  "updated_at": "<timestamp>",
+  "completed_at": "<timestamp>",
+  "error_message": null,
+  "retry_count": 0,
+  "next_retry_at": null,
+  "result": {
+    "success": true,
+    "bank_id": "foresight-floor",
+    "observations_created": 0,
+    "scopes_consolidated": 0,
+    "operation": "consolidate"
+  },
+  "task_payload": {
+    "tag_scopes": [
+      {
+        "tags": ["alpha"]
+      }
+    ],
+    "async": false
+  },
+  "result_operation": "consolidate",
+  "result_observations_created": 0,
+  "result_scopes_consolidated": 0
+}

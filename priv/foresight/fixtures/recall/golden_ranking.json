@@ -1,0 +1,29 @@
+{
+  "query": "Alice alpha yesterday",
+  "query_timestamp": "2026-01-03T10:00:00Z",
+  "items": [
+    {
+      "content": "Alice discussed alpha yesterday",
+      "context": "project review",
+      "mentioned_at": "2026-01-02T12:00:00Z",
+      "tags": ["user:alice", "topic:alpha"]
+    },
+    {
+      "content": "Alice discussed alpha",
+      "context": "project review",
+      "mentioned_at": "2026-01-02T12:00:00Z",
+      "tags": ["user:alice", "topic:alpha"]
+    },
+    {
+      "content": "alpha update yesterday",
+      "context": "project review",
+      "mentioned_at": "2026-01-02T12:00:00Z",
+      "tags": ["topic:alpha"]
+    }
+  ],
+  "expected_order": [
+    "Alice discussed alpha yesterday",
+    "Alice discussed alpha",
+    "alpha update yesterday"
+  ]
+}

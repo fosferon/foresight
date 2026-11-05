@@ -1,0 +1,823 @@
+{
+  "version": 1,
+  "memories": [
+    {
+      "id": "arch-001",
+      "content": "The approved SaaS shape keeps each single-tenant application core independent from a platform control plane. The control plane orchestrates tenant lifecycle, billing, routing, and fleet operations without absorbing tenant business logic.",
+      "context": "ADR-014",
+      "mentioned_at": "2025-01-12T09:00:00Z",
+      "tags": ["architecture", "saas", "control-plane"]
+    },
+    {
+      "id": "arch-002",
+      "content": "Tenant provisioning is owned by the platform orchestrator: create the tenant boundary, apply migrations, register billing state, attach routing, and report readiness as an idempotent workflow.",
+      "context": "implementation note",
+      "mentioned_at": "2025-01-15T10:00:00Z",
+      "tags": ["architecture", "provisioning", "workflow"]
+    },
+    {
+      "id": "arch-003",
+      "content": "PostgreSQL uses one schema per tenant. Migrations are versioned centrally but applied and recorded per schema so one failed tenant migration does not imply fleet-wide success.",
+      "context": "ADR-018",
+      "mentioned_at": "2025-01-17T11:30:00Z",
+      "tags": ["postgresql", "multi-tenancy", "migrations"]
+    },
+    {
+      "id": "arch-004",
+      "content": "Runtime isolation is per tenant: each tenant has a supervised GenServer subtree and separate ETS tables. Process registry keys include the tenant identity, and crashes restart only that tenant's workers.",
+      "context": "implementation note",
+      "mentioned_at": "2025-01-20T08:15:00Z",
+      "tags": ["elixir", "genserver", "ets", "isolation"]
+    },
+    {
+      "id": "arch-005",
+      "content": "The platform operates as tenant zero through the same public contracts used by managed tenants. Privileged control-plane capabilities remain explicit rather than leaking into the tenant core.",
+      "context": "ADR-021",
+      "mentioned_at": "2025-01-22T14:00:00Z",
+      "tags": ["architecture", "tenant-zero", "contracts"]
+    },
+    {
+      "id": "arch-006",
+      "content": "Custom domains are attached by asking customers to create a CNAME to the platform edge. Domain ownership verification and certificate issuance complete before routing is activated.",
+      "context": "domain runbook",
+      "mentioned_at": "2025-01-24T12:20:00Z",
+      "tags": ["dns", "cname", "tls", "routing"]
+    },
+    {
+      "id": "arch-007",
+      "content": "The approved Elixir/Phoenix umbrella separates domain applications by responsibility. Cross-application calls go through narrow public modules; direct access to another application's tables or internal processes is prohibited.",
+      "context": "ADR-024",
+      "mentioned_at": "2025-02-03T09:45:00Z",
+      "tags": ["elixir", "phoenix", "umbrella", "boundaries"]
+    },
+    {
+      "id": "arch-008",
+      "content": "Deterministic eligibility, accounting, and policy rules live in versioned PostgreSQL functions with fixture-backed tests. This gives every decision a replayable input and output independent of model availability.",
+      "context": "policy implementation note",
+      "mentioned_at": "2025-02-06T15:00:00Z",
+      "tags": ["postgresql", "deterministic", "audit"]
+    },
+    {
+      "id": "arch-009",
+      "content": "LLM inference is isolated behind Elixir behaviours. Callers depend on typed domain results, while provider selection, retries, prompts, and response parsing stay inside replaceable adapters.",
+      "context": "interface specification",
+      "mentioned_at": "2025-02-08T13:10:00Z",
+      "tags": ["llm", "behaviour", "adapter", "boundaries"]
+    },
+    {
+      "id": "arch-010",
+      "content": "The deployment baseline is a native OTP release with no Docker container or sidecar requirement. Extra infrastructure must justify its operational cost rather than being introduced by convention.",
+      "context": "release record",
+      "mentioned_at": "2025-02-11T08:40:00Z",
+      "tags": ["otp", "deployment", "constraint"]
+    },
+    {
+      "id": "arch-011",
+      "content": "When an external runtime is unavoidable, an OTP supervisor owns its operating-system process, health checks, restart budget, and shutdown. An unsupervised shell process is not an accepted production integration.",
+      "context": "operations runbook",
+      "mentioned_at": "2025-02-13T16:00:00Z",
+      "tags": ["otp", "supervision", "external-runtime"]
+    },
+    {
+      "id": "arch-012",
+      "content": "A separate analytics store may receive asynchronous events, but it is not authoritative for billing or access control. Transactional PostgreSQL remains the source of truth for those decisions.",
+      "context": "data ownership ADR",
+      "mentioned_at": "2025-02-17T10:25:00Z",
+      "tags": ["analytics", "postgresql", "source-of-truth"]
+    },
+    {
+      "id": "arch-013",
+      "content": "A workshop sketch put platform settings and tenant records in one shared public schema to simplify joins. The isolation review found that row filters would couple control-plane releases to tenant-domain tables.",
+      "context": "architecture workshop",
+      "mentioned_at": "2025-02-19T11:15:00Z",
+      "tags": ["postgresql", "multi-tenancy", "control-plane"]
+    },
+    {
+      "id": "inc-001",
+      "content": "Uploads succeeded for staff but failed in locked-down customer browsers. Server logs showed no rejected upload requests; the affected browsers blocked a CDN-hosted webfont and a client bundle waited on that asset before initializing the uploader.",
+      "context": "incident log",
+      "mentioned_at": "2025-03-04T18:10:00Z",
+      "tags": ["incident", "browser", "cdn", "uploads"]
+    },
+    {
+      "id": "inc-002",
+      "content": "The upload incident was fixed by removing the uploader's dependency on cosmetic asset completion, self-hosting the required static asset, and adding a test with third-party requests denied.",
+      "context": "remediation note",
+      "mentioned_at": "2025-03-05T11:30:00Z",
+      "tags": ["incident", "browser", "remediation"]
+    },
+    {
+      "id": "inc-003",
+      "content": "A distributed crawler flood requested high-cardinality WooCommerce filter and cart URLs. Those URLs bypassed page cache and saturated PHP-FPM workers even though total network throughput remained moderate.",
+      "context": "incident log",
+      "mentioned_at": "2025-03-18T07:20:00Z",
+      "tags": ["incident", "crawler", "php-fpm", "woocommerce"]
+    },
+    {
+      "id": "inc-004",
+      "content": "Crawler mitigation combined edge rate limits by route class, normalization of useless query combinations, cache rules for safe catalog requests, and origin concurrency caps. Blocking one user agent was rejected because the flood was distributed.",
+      "context": "remediation note",
+      "mentioned_at": "2025-03-18T15:50:00Z",
+      "tags": ["incident", "rate-limit", "cache", "origin"]
+    },
+    {
+      "id": "inc-005",
+      "content": "Evaluation API spend rose with every local boot. A startup callback eagerly prefetched model metadata and embeddings even when no evaluation ran, so repeated test boots multiplied paid requests.",
+      "context": "cost incident log",
+      "mentioned_at": "2025-04-02T09:10:00Z",
+      "tags": ["incident", "api-cost", "startup"]
+    },
+    {
+      "id": "inc-006",
+      "content": "The spend leak was removed by making model initialization lazy, caching immutable provider metadata, and instrumenting request counts by boot identifier and evaluation run.",
+      "context": "remediation note",
+      "mentioned_at": "2025-04-02T14:35:00Z",
+      "tags": ["incident", "api-cost", "lazy-init"]
+    },
+    {
+      "id": "inc-007",
+      "content": "Concurrent SQLite writers failed immediately with database-locked errors. The connection used busy_timeout=0, WAL mode was not enabled, and a read-modify-write sequence spanned multiple implicit transactions.",
+      "context": "storage incident log",
+      "mentioned_at": "2025-04-21T17:40:00Z",
+      "tags": ["incident", "sqlite", "concurrency", "wal"]
+    },
+    {
+      "id": "inc-008",
+      "content": "The SQLite repair enabled WAL, set a bounded busy_timeout, wrapped each logical write in one explicit transaction, shortened write duration, and retained retry telemetry rather than hiding sustained contention.",
+      "context": "remediation note",
+      "mentioned_at": "2025-04-22T10:05:00Z",
+      "tags": ["incident", "sqlite", "transaction", "remediation"]
+    },
+    {
+      "id": "inc-009",
+      "content": "A deploy job completed successfully but CI reported failure. The privilege allowlist granted `/bin/systemctl restart app-worker`, while command discovery on the runner resolved the target executable to `/usr/bin/systemctl`; the sudo executable and deployed artifact were not the source of the mismatch.",
+      "context": "deployment incident log",
+      "mentioned_at": "2025-05-07T12:00:00Z",
+      "tags": ["incident", "ci", "deploy", "sudo"]
+    },
+    {
+      "id": "inc-010",
+      "content": "The deploy false-red was fixed by resolving and validating the executable path once, then matching the normalized command representation. The team also separated deployment outcome from policy-check outcome in CI reporting.",
+      "context": "remediation note",
+      "mentioned_at": "2025-05-07T15:15:00Z",
+      "tags": ["incident", "ci", "normalization"]
+    },
+    {
+      "id": "inc-011",
+      "content": "A queue latency alert was traced to a reporting query missing an index after a schema change. It was unrelated to the crawler incident because cache hit rate and PHP-FPM utilization were normal.",
+      "context": "performance incident log",
+      "mentioned_at": "2025-05-20T08:30:00Z",
+      "tags": ["incident", "queue", "postgresql", "index"]
+    },
+    {
+      "id": "inc-012",
+      "content": "A brief certificate renewal delay affected a staging route only. Automated renewal recovered before expiry, and no upload or production routing request failed.",
+      "context": "operations note",
+      "mentioned_at": "2025-05-24T06:50:00Z",
+      "tags": ["tls", "staging", "renewal"]
+    },
+    {
+      "id": "inc-013",
+      "content": "A separate staging upload failure returned HTTP 413 for files above ten megabytes. The request reached the reverse proxy, and increasing the staging body-size limit resolved it; browser asset policy was not involved.",
+      "context": "staging incident log",
+      "mentioned_at": "2025-05-26T13:25:00Z",
+      "tags": ["incident", "uploads", "reverse-proxy", "staging"]
+    },
+    {
+      "id": "sup-001",
+      "content": "An early onboarding prototype delegated conversation state to Python through erlport. The prototype proved the interaction model but was never approved as the production boundary.",
+      "context": "prototype review",
+      "mentioned_at": "2024-09-10T10:00:00Z",
+      "tags": ["prototype", "python", "erlport", "onboarding"]
+    },
+    {
+      "id": "sup-002",
+      "content": "The release implementation handles onboarding in native Elixir: MessageBus carries envelopes and ConversationEngine runs supervised persona state. Runtime startup contains no Python port or erlport child specification.",
+      "context": "release implementation note",
+      "mentioned_at": "2025-02-25T14:00:00Z",
+      "tags": ["elixir", "message-bus", "conversation-engine", "onboarding"]
+    },
+    {
+      "id": "sup-003",
+      "content": "The migration verification report records parity checks for turn ordering, retry behavior, persona transitions, and restart recovery in the native ConversationEngine.",
+      "context": "verification report",
+      "mentioned_at": "2025-03-01T09:30:00Z",
+      "tags": ["migration", "tests", "conversation-engine"]
+    },
+    {
+      "id": "sup-004",
+      "content": "The dependency inventory dated September lists erlport and a Python NLP package. The March mix.exs snapshot and release manifest list neither package.",
+      "context": "dependency inventory",
+      "mentioned_at": "2025-03-03T16:20:00Z",
+      "tags": ["mix", "dependencies", "release-manifest"]
+    },
+    {
+      "id": "sup-005",
+      "content": "A capacity blueprint sketches Kafka, Kubernetes, and a vector sidecar for a possible high-volume tier. Its header is marked exploratory and contains no implementation owner or acceptance record.",
+      "context": "capacity blueprint",
+      "mentioned_at": "2025-03-08T11:10:00Z",
+      "tags": ["blueprint", "kafka", "kubernetes", "vector-service"]
+    },
+    {
+      "id": "sup-006",
+      "content": "The initial tenancy memo recommended one database per tenant. Capacity testing and migration drills later replaced that recommendation with schema-per-tenant for the current scale envelope.",
+      "context": "planning memo",
+      "mentioned_at": "2024-11-15T13:00:00Z",
+      "tags": ["multi-tenancy", "database", "capacity"]
+    },
+    {
+      "id": "sup-007",
+      "content": "A 2025 architecture decision record adopts schema-per-tenant, with an escape hatch to dedicated databases for regulated or exceptionally large tenants. This record supersedes the initial one-database-per-tenant memo.",
+      "context": "ADR-018",
+      "mentioned_at": "2025-01-17T16:45:00Z",
+      "tags": ["multi-tenancy", "schema", "regulated-workloads"]
+    },
+    {
+      "id": "sup-008",
+      "content": "An early approval implementation gave each consumer its own fork of the workflow state machine. The admin UI, batch importer, and partner API each encoded transitions, retry semantics, and idempotency keys independently, so divergence was only caught at integration time.",
+      "context": "legacy workflow review",
+      "mentioned_at": "2025-02-05T10:30:00Z",
+      "tags": ["workflow", "adapters", "legacy", "shared-core"]
+    },
+    {
+      "id": "sup-009",
+      "content": "A dashboard mockup labels the analytics store as the system of record. The implementation review corrected the label because billing and authorization still read transactional PostgreSQL.",
+      "context": "implementation audit",
+      "mentioned_at": "2025-02-18T12:40:00Z",
+      "tags": ["analytics", "billing", "source-of-truth"]
+    },
+    {
+      "id": "sup-010",
+      "content": "The team considered global ETS tables for simpler lookup during a spike. Isolation review rejected them in favor of tenant-scoped tables owned by tenant supervisors.",
+      "context": "isolation spike report",
+      "mentioned_at": "2025-01-19T15:25:00Z",
+      "tags": ["ets", "isolation", "prototype"]
+    },
+    {
+      "id": "sup-011",
+      "content": "The repository still invokes Python in an offline fixture generator used by benchmark maintainers. That tool is outside the OTP release and does not participate in onboarding requests.",
+      "context": "repository inventory",
+      "mentioned_at": "2025-03-04T09:40:00Z",
+      "tags": ["python", "fixtures", "benchmarks", "tooling"]
+    },
+    {
+      "id": "dep-001",
+      "content": "A reconciliation meeting found that the admin UI, batch importer, and partner API encode the same approval states differently. Two consumers allow a transition that the third blocks, and their retry keys cannot be compared.",
+      "context": "workflow ADR",
+      "mentioned_at": "2025-03-11T09:20:00Z",
+      "tags": ["workflow", "adapters", "shared-core"]
+    },
+    {
+      "id": "dep-002",
+      "content": "The shared workflow owns state transitions and invariants. Consumer adapters translate authentication, request shape, and presentation concerns without forking transition rules.",
+      "context": "domain specification",
+      "mentioned_at": "2025-03-12T10:10:00Z",
+      "tags": ["workflow", "invariants", "adapters"]
+    },
+    {
+      "id": "dep-003",
+      "content": "Integration tests were flaky because consumers shared database rows and process names. Each test now receives a unique database sandbox owner, tenant identity, registry scope, and supervised process tree.",
+      "context": "test failure report",
+      "mentioned_at": "2025-03-25T08:55:00Z",
+      "tags": ["tests", "database", "isolation", "process"]
+    },
+    {
+      "id": "dep-004",
+      "content": "Asynchronous tests may transfer sandbox ownership only to explicitly supervised child processes. Detached tasks are forbidden because they can outlive the test and write through a checked-in connection.",
+      "context": "test harness note",
+      "mentioned_at": "2025-03-26T14:15:00Z",
+      "tags": ["tests", "sandbox", "supervision"]
+    },
+    {
+      "id": "dep-005",
+      "content": "The notification service records one receipt for each message-recipient pair. A message-level delivered flag cannot represent partial delivery, retry, or recipient-specific failure.",
+      "context": "messaging schema note",
+      "mentioned_at": "2025-04-09T11:00:00Z",
+      "tags": ["messaging", "receipts", "data-model"]
+    },
+    {
+      "id": "dep-006",
+      "content": "The context router freezes the recipient set when send is accepted. Later membership changes do not alter who owes a receipt for that message, preserving deterministic completion and audit history.",
+      "context": "delivery ADR",
+      "mentioned_at": "2025-04-09T11:30:00Z",
+      "tags": ["messaging", "recipients", "audit"]
+    },
+    {
+      "id": "dep-007",
+      "content": "A message is complete only when every frozen recipient has a terminal delivered, failed, or expired receipt. Retries update that recipient's attempt history without duplicating other recipients' receipts.",
+      "context": "completion specification",
+      "mentioned_at": "2025-04-10T13:45:00Z",
+      "tags": ["messaging", "completion", "retry"]
+    },
+    {
+      "id": "dep-008",
+      "content": "The provisioning event contract defines separate `data_ready` and `edge_ready` signals. Migration workers emit the first; domain verification emits the second. Neither signal implies that downstream account activation has run.",
+      "context": "event contract",
+      "mentioned_at": "2025-04-14T09:35:00Z",
+      "tags": ["provisioning", "billing", "routing", "dependency"]
+    },
+    {
+      "id": "dep-009",
+      "content": "The importer and partner API use different idempotency key formats. Their adapters normalize keys before invoking the shared workflow, which stores one canonical operation identity.",
+      "context": "adapter specification",
+      "mentioned_at": "2025-04-16T16:10:00Z",
+      "tags": ["idempotency", "adapters", "workflow"]
+    },
+    {
+      "id": "dep-010",
+      "content": "Metrics aggregation consumes workflow events asynchronously. A delayed dashboard must not block approval transitions or cause a completed operation to be retried.",
+      "context": "analytics integration note",
+      "mentioned_at": "2025-04-18T10:45:00Z",
+      "tags": ["metrics", "events", "workflow", "analytics"]
+    },
+    {
+      "id": "dep-011",
+      "content": "A newsletter service intentionally resolves recipients at delivery time so late subscribers receive the latest bulletin. Its completion metric counts sends, not acknowledgements, and it has no per-recipient retry contract.",
+      "context": "newsletter implementation note",
+      "mentioned_at": "2025-04-20T12:15:00Z",
+      "tags": ["messaging", "recipients", "delivery", "newsletter"]
+    },
+    {
+      "id": "dep-012",
+      "content": "A workflow decision commits its authoritative row and an outbox event in the same database transaction. Queue consumers may retry delivery, but they cannot establish or reverse the business outcome independently.",
+      "context": "transactional outbox ADR",
+      "mentioned_at": "2025-04-23T09:20:00Z",
+      "tags": ["workflow", "outbox", "transaction", "authority"]
+    },
+    {
+      "id": "ops-001",
+      "content": "Production changes must run as reversible, idempotent operations. A retry after partial failure should inspect current state and continue, not recreate tenant resources blindly.",
+      "context": "change runbook",
+      "mentioned_at": "2025-05-01T09:00:00Z",
+      "tags": ["operations", "idempotency", "recovery"]
+    },
+    {
+      "id": "ops-002",
+      "content": "Per-tenant migrations run with bounded concurrency and record start, finish, version, and failure reason per schema. The fleet pauses automatically when the failure threshold is exceeded.",
+      "context": "fleet migration runbook",
+      "mentioned_at": "2025-05-02T10:20:00Z",
+      "tags": ["operations", "migrations", "multi-tenancy"]
+    },
+    {
+      "id": "ops-003",
+      "content": "No production path may depend on public CDN availability for core interaction. Cosmetic assets may degrade, while upload, authentication, and billing controls must initialize from first-party resources.",
+      "context": "frontend runbook",
+      "mentioned_at": "2025-05-06T14:10:00Z",
+      "tags": ["operations", "cdn", "reliability"]
+    },
+    {
+      "id": "ops-004",
+      "content": "Paid model calls are disabled during application boot and ordinary unit tests. Evaluation suites must opt in explicitly, set a request budget, and emit provider usage by run.",
+      "context": "evaluation runbook",
+      "mentioned_at": "2025-05-09T08:40:00Z",
+      "tags": ["operations", "llm", "cost", "tests"]
+    },
+    {
+      "id": "ops-005",
+      "content": "SQLite is accepted for a single-node local control service only when write contention remains bounded, WAL and busy timeout are configured, and backup restoration is exercised.",
+      "context": "storage ADR",
+      "mentioned_at": "2025-05-12T13:30:00Z",
+      "tags": ["operations", "sqlite", "constraint"]
+    },
+    {
+      "id": "ops-006",
+      "content": "CI policy checks normalize executable paths and arguments before comparison. Reports must distinguish a policy mismatch from a failed deployment so operators do not roll back a healthy release.",
+      "context": "CI policy note",
+      "mentioned_at": "2025-05-14T15:05:00Z",
+      "tags": ["operations", "ci", "deploy"]
+    },
+    {
+      "id": "ops-007",
+      "content": "Custom-domain activation requires verified DNS ownership, issued certificates, and a passing edge health probe. The workflow may remain pending safely and is retryable.",
+      "context": "domain activation runbook",
+      "mentioned_at": "2025-05-16T11:50:00Z",
+      "tags": ["operations", "dns", "tls", "routing"]
+    },
+    {
+      "id": "ops-008",
+      "content": "External runtime adapters must expose health, version, and restart counters through the same telemetry as native workers. Operators must not need a separate sidecar dashboard to detect failure.",
+      "context": "runtime runbook",
+      "mentioned_at": "2025-05-19T09:15:00Z",
+      "tags": ["operations", "otp", "telemetry"]
+    },
+    {
+      "id": "ops-009",
+      "content": "Backups are checked by restoring into an isolated environment and replaying deterministic acceptance queries. A successful archive upload alone does not count as a recovery test.",
+      "context": "recovery runbook",
+      "mentioned_at": "2025-05-22T12:05:00Z",
+      "tags": ["operations", "backup", "restore"]
+    },
+    {
+      "id": "ops-010",
+      "content": "Rate limits are defined by route cost and tenant budget, not only source address. Expensive uncached catalog and inference routes receive stricter concurrency limits.",
+      "context": "capacity runbook",
+      "mentioned_at": "2025-05-27T10:35:00Z",
+      "tags": ["operations", "rate-limit", "capacity"]
+    },
+    {
+      "id": "ops-011",
+      "content": "A production rollout may proceed only with a named rollback action, an observable success signal, and a bounded watch period. CI policy status and service-health status are recorded independently.",
+      "context": "release runbook",
+      "mentioned_at": "2025-05-29T14:20:00Z",
+      "tags": ["operations", "release", "rollback", "observability"]
+    },
+    {
+      "id": "ops-012",
+      "content": "During model-provider outages, deterministic authorization and billing paths continue. Features that require synthesis return an explicit degraded result, use a bounded retry budget, and never substitute generated output for a policy decision.",
+      "context": "provider outage runbook",
+      "mentioned_at": "2025-05-30T09:10:00Z",
+      "tags": ["operations", "llm", "degraded-mode", "policy"]
+    },
+    {
+      "id": "ops-013",
+      "content": "A rolling OTP release drains one BEAM node at a time: routing stops new sessions, workers stop claiming jobs, durable leases are checkpointed or handed off, and the supervisor gets a bounded graceful-shutdown window. Interrupted work resumes from its lease, and the next node waits for session, queue, and duplicate-execution signals.",
+      "context": "BEAM release runbook",
+      "mentioned_at": "2025-05-31T09:30:00Z",
+      "tags": ["operations", "elixir", "rolling-release", "job-leases"]
+    },
+    {
+      "id": "ops-014",
+      "content": "Recovery exercises restore the relational snapshot and object archive into a sealed network. The base-data gate compares authoritative business-row counts and object digests against the backup manifest before downstream consumers start.",
+      "context": "backup restoration procedure",
+      "mentioned_at": "2025-05-31T11:00:00Z",
+      "tags": ["operations", "recovery", "snapshot", "object-archive"]
+    },
+    {
+      "id": "ops-016",
+      "content": "After base data passes recovery checks, projection consumers replay the transactional outbox from its recorded checkpoint. Traffic stays disabled until replay reaches the expected event position and reporting projection checkpoints agree with the authoritative workflow ledger.",
+      "context": "projection rebuild procedure",
+      "mentioned_at": "2025-05-31T12:00:00Z",
+      "tags": ["operations", "recovery", "outbox", "projections"]
+    },
+    {
+      "id": "ops-015",
+      "content": "A rollout that has emitted writes in a new schema shape may roll back only when the prior binary has passed a compatibility probe against those writes. Otherwise operators pause the wave, preserve evidence, and ship a forward fix through the same canary and watch gates.",
+      "context": "deployment recovery runbook",
+      "mentioned_at": "2025-05-31T14:10:00Z",
+      "tags": ["operations", "deployment", "compatibility", "canary"]
+    },
+    {
+      "id": "str-001",
+      "content": "The portfolio strategy treats infrastructure projects as a compounding proof network. Shared primitives, incident evidence, and benchmark results should strengthen later products and authority rather than remain isolated obligations.",
+      "context": "portfolio meeting note",
+      "mentioned_at": "2025-06-02T09:00:00Z",
+      "tags": ["strategy", "portfolio", "compounding"]
+    },
+    {
+      "id": "str-002",
+      "content": "The research system is positioned as an R&D and authority engine, not a direct horizontal SaaS. Its primary outputs are validated methods, public evidence, and reusable assurance components.",
+      "context": "product council minutes",
+      "mentioned_at": "2025-06-03T10:15:00Z",
+      "tags": ["strategy", "research", "authority"]
+    },
+    {
+      "id": "str-003",
+      "content": "For regulated buyers, the deployment pattern uses customer-hosted service agents rather than a vendor data lake. Each installation keeps its own retention boundary and model-provider credentials.",
+      "context": "deployment options memo",
+      "mentioned_at": "2025-06-05T13:20:00Z",
+      "tags": ["strategy", "federated", "byo-keys"]
+    },
+    {
+      "id": "str-004",
+      "content": "The pricing workshop tied fees to reduced investigation time, safer decisions, and retained organizational knowledge. Compute usage and installation count were treated as cost inputs rather than buyer outcomes.",
+      "context": "pricing workshop",
+      "mentioned_at": "2025-06-06T11:40:00Z",
+      "tags": ["strategy", "pricing", "value"]
+    },
+    {
+      "id": "str-005",
+      "content": "The go-to-market sequence is authority first: publish reproducible evaluations and operational lessons, then convert trust into design partnerships before packaging a repeatable offer.",
+      "context": "market entry memo",
+      "mentioned_at": "2025-06-09T08:50:00Z",
+      "tags": ["strategy", "authority", "go-to-market"]
+    },
+    {
+      "id": "str-006",
+      "content": "A fleet feature rollout gates new behavior behind a runtime kill-switch. Operators can disable the feature path without redeploying, while per-route success-rate telemetry and health probes determine whether the wave advances, pauses, or reverses.",
+      "context": "rollout controls runbook",
+      "mentioned_at": "2025-06-10T14:30:00Z",
+      "tags": ["operations", "rollout", "kill-switch", "telemetry"]
+    },
+    {
+      "id": "str-007",
+      "content": "A proposal to launch a low-price self-service tier was deferred. Support variance and integration depth make design partnerships the better learning channel at the current stage.",
+      "context": "product council minutes",
+      "mentioned_at": "2025-06-12T15:10:00Z",
+      "tags": ["strategy", "pricing", "self-service"]
+    },
+    {
+      "id": "str-008",
+      "content": "Customer-hosted service agents reduce vendor custody but increase fleet-management work. A management plane can distribute signed configuration and collect health summaries without receiving customer knowledge content.",
+      "context": "security architecture memo",
+      "mentioned_at": "2025-06-13T09:25:00Z",
+      "tags": ["strategy", "federated", "control-plane"]
+    },
+    {
+      "id": "str-009",
+      "content": "Open benchmark artifacts are selected when they create credible external proof without exposing client material. Private operational corpora remain sanitized and are reported through aggregate metrics.",
+      "context": "evidence policy",
+      "mentioned_at": "2025-06-16T12:00:00Z",
+      "tags": ["strategy", "benchmarks", "privacy"]
+    },
+    {
+      "id": "str-010",
+      "content": "A feature is prioritized when it advances multiple vectors such as product reliability, research evidence, and commercial trust. One-off customization with no reusable proof receives lower priority.",
+      "context": "prioritization rubric",
+      "mentioned_at": "2025-06-18T10:10:00Z",
+      "tags": ["strategy", "prioritization", "leverage"]
+    },
+    {
+      "id": "str-011",
+      "content": "A security review compared vendor-held model keys with customer-managed credentials. The review favored customer-managed credentials because centralized custody enlarged incident blast radius and obscured direct provider spend.",
+      "context": "security review",
+      "mentioned_at": "2025-06-20T11:35:00Z",
+      "tags": ["strategy", "byo-keys", "risk"]
+    },
+    {
+      "id": "str-012",
+      "content": "The quarterly content calendar is a tactical artifact, not the strategy itself. Publication is useful only when tied to reproducible proof, a clear buyer concern, and a reusable system capability.",
+      "context": "editorial meeting note",
+      "mentioned_at": "2025-06-23T09:45:00Z",
+      "tags": ["strategy", "content", "publication"]
+    },
+    {
+      "id": "str-013",
+      "content": "A metered-pricing pilot for a generic document-conversion API charges per page because usage closely tracks delivery cost. The pilot serves transactional API buyers and does not cover advisory or knowledge-retention engagements.",
+      "context": "pricing experiment",
+      "mentioned_at": "2025-06-24T11:30:00Z",
+      "tags": ["strategy", "pricing", "usage", "api"]
+    }
+  ],
+  "queries": [
+    {
+      "id": "professional-architecture-boundary-01",
+      "category": "architecture-boundary",
+      "query": "Architecture thread: the workspace app already ships on its own, but enterprise wants subscriptions, workspace creation, and branded URLs across a fleet. Where does the new fleet wrapper stop so we do not turn the product into one large admin system?",
+      "query_timestamp": "2025-07-01T09:00:00Z",
+      "relevance": {"arch-001": 3, "arch-002": 2, "arch-005": 2},
+      "hard_negatives": ["arch-013", "ops-001", "sup-006", "arch-012"],
+      "reference_answer": "Keep the single-tenant core independent and add a control plane for lifecycle, billing, routing, and fleet operations. Run the platform as tenant zero through explicit contracts, with provisioning as an idempotent workflow."
+    },
+    {
+      "id": "professional-architecture-boundary-02",
+      "category": "architecture-boundary",
+      "query": "Design review note: one noisy workspace must not see another's rows or crash its live workers, yet releases still need to roll out upgrades without hand-running hundreds of databases. What layout fits those constraints?",
+      "query_timestamp": "2025-07-01T09:05:00Z",
+      "relevance": {"arch-003": 3, "arch-004": 3, "ops-002": 2, "sup-007": 1},
+      "hard_negatives": ["sup-006", "dep-003", "inc-007", "ops-008"],
+      "reference_answer": "Use schema-per-tenant with centrally versioned, per-schema migration records, and tenant-scoped supervised GenServers and ETS tables. Run migrations with bounded concurrency and an automatic failure threshold."
+    },
+    {
+      "id": "professional-architecture-boundary-03",
+      "category": "architecture-boundary",
+      "query": "Audit finding: a prompt currently decides whether an account qualifies for a credit, and provider response maps have leaked into two umbrella apps. How should we redraw this before compliance review?",
+      "query_timestamp": "2025-07-01T09:10:00Z",
+      "relevance": {"arch-007": 2, "arch-008": 3, "arch-009": 3, "ops-012": 2, "arch-005": 1},
+      "hard_negatives": ["arch-012", "sup-009", "ops-004", "inc-005"],
+      "reference_answer": "Keep umbrella applications behind narrow public boundaries, implement deterministic rules as tested PostgreSQL functions, and isolate inference behind Elixir behaviours returning typed domain results."
+    },
+    {
+      "id": "professional-architecture-boundary-04",
+      "category": "architecture-boundary",
+      "query": "Meeting follow-up: a vendor SDK only runs in another VM. The prototype starts it from a shell script and nobody owns restart or shutdown. What production shape preserves our normal release model?",
+      "query_timestamp": "2025-07-01T09:15:00Z",
+      "relevance": {"arch-010": 2, "arch-011": 3, "ops-008": 2},
+      "hard_negatives": ["sup-001", "sup-005", "sup-011", "ops-005"],
+      "reference_answer": "Keep the native OTP release as baseline and have an OTP supervisor own the external process, including health checks, restart budget, shutdown, version, and telemetry."
+    },
+    {
+      "id": "professional-architecture-boundary-05",
+      "category": "architecture-boundary",
+      "query": "Support thread: the workspace exists and its invoice row is open, but the branded address still shows certificate pending. Which service owns each step, and should the account be marked live yet?",
+      "query_timestamp": "2025-07-01T09:20:00Z",
+      "relevance": {"arch-002": 2, "arch-006": 3, "dep-008": 3, "ops-007": 2},
+      "hard_negatives": ["inc-012", "inc-013", "arch-013", "dep-011"],
+      "reference_answer": "Use a verified CNAME flow with certificate issuance and an edge health probe. Billing activation waits for both schema migration and route readiness, while the retryable workflow may remain pending safely."
+    },
+    {
+      "id": "professional-incident-diagnosis-01",
+      "category": "incident-diagnosis",
+      "query": "Help-desk escalation: users at two restricted networks never see the attachment control finish loading. Office laptops work, and the API has no request for the failed attempts. Where should we investigate first and what is the durable fix?",
+      "query_timestamp": "2025-07-01T10:00:00Z",
+      "relevance": {"inc-001": 3, "inc-002": 3, "ops-003": 2},
+      "hard_negatives": ["inc-013", "inc-012", "inc-003", "ops-007"],
+      "reference_answer": "The browser blocked a CDN webfont and the client bundle incorrectly waited for it before initializing uploads. Decouple core initialization from cosmetic assets, self-host what is required, and test with third-party requests denied."
+    },
+    {
+      "id": "professional-incident-diagnosis-02",
+      "category": "incident-diagnosis",
+      "query": "On-call chat: origin worker slots are pinned while bytes per second look ordinary. Requests come from many addresses and mostly differ by catalog filters or basket parameters. Why did cache not protect us, and what containment is worth deploying?",
+      "query_timestamp": "2025-07-01T10:05:00Z",
+      "relevance": {"inc-003": 3, "inc-004": 3, "ops-010": 2},
+      "hard_negatives": ["inc-011", "inc-001", "inc-012", "inc-009"],
+      "reference_answer": "High-cardinality WooCommerce filter and cart URLs bypass cache and consume expensive PHP-FPM work. Apply route-cost rate limits, normalize useless query combinations, cache safe requests, and cap origin concurrency rather than blocking one user agent."
+    },
+    {
+      "id": "professional-incident-diagnosis-03",
+      "category": "incident-diagnosis",
+      "query": "FinOps ticket: yesterday's CI fan-out created hundreds of provider charges, including jobs that exited before selecting a benchmark. The count tracks application starts more closely than completed cases. What code path would you trace?",
+      "query_timestamp": "2025-07-01T10:10:00Z",
+      "relevance": {"inc-005": 3, "inc-006": 3, "ops-004": 2},
+      "hard_negatives": ["inc-011", "inc-007", "str-013", "ops-010"],
+      "reference_answer": "An eager startup prefetch is making paid requests. Initialize lazily, cache immutable metadata, disable paid calls on ordinary boot and unit tests, and meter requests per boot and evaluation run."
+    },
+    {
+      "id": "professional-incident-diagnosis-04",
+      "category": "incident-diagnosis",
+      "query": "CI failure note: the local state service is reliable when tests run alone but parallel jobs immediately report locked storage. A recent refactor split read and update helpers. Which connection and transaction details explain the change?",
+      "query_timestamp": "2025-07-01T10:15:00Z",
+      "relevance": {"inc-007": 3, "inc-008": 3, "ops-005": 1},
+      "hard_negatives": ["inc-005", "inc-011", "arch-003", "ops-002"],
+      "reference_answer": "Immediate lock failure came from busy_timeout=0, missing WAL, and a logical write split across implicit transactions. Enable WAL and a bounded timeout, use one short explicit transaction, and retain retry telemetry."
+    },
+    {
+      "id": "professional-incident-diagnosis-05",
+      "category": "incident-diagnosis",
+      "query": "Release room: health checks are green, but the policy step says the restart command is not permitted. The rule screenshot names `/bin/systemctl`; the runner log names `/usr/bin/systemctl`. Did deployment fail, and what should be normalized?",
+      "query_timestamp": "2025-07-01T10:20:00Z",
+      "relevance": {"inc-009": 3, "inc-010": 3, "ops-006": 2, "ops-011": 2},
+      "hard_negatives": ["inc-011", "inc-012", "ops-009", "arch-011"],
+      "reference_answer": "The allowlist granted a different resolved target path for systemctl even though the command semantics matched. Normalize the target executable path and arguments, and report policy-check failure separately from deployment outcome."
+    },
+    {
+      "id": "professional-supersession-01",
+      "category": "supersession",
+      "query": "Tech-debt ticket: the September inventory calls for a Python bridge before sign-up work. The release manifest has no port dependency, persona restart tests exercise ConversationEngine, and a fixture command elsewhere in the repository still invokes Python. What should happen to the ticket?",
+      "query_timestamp": "2025-07-01T11:00:00Z",
+      "relevance": {"sup-001": 1, "sup-002": 3, "sup-003": 2, "sup-004": 3, "sup-011": 2},
+      "hard_negatives": ["arch-011", "sup-005", "ops-008", "ops-004"],
+      "reference_answer": "The release uses native Elixir MessageBus and ConversationEngine components. Do not restore Python or erlport; the inventory describes the prototype, while the manifest and parity report describe the shipped path."
+    },
+    {
+      "id": "professional-supersession-02",
+      "category": "supersession",
+      "query": "Launch checklist review: someone copied the high-volume capacity sketch into the mandatory infrastructure section. There is no owner for those services, and staging is a plain release. What evidence determines the actual baseline?",
+      "query_timestamp": "2025-07-01T11:05:00Z",
+      "relevance": {"sup-005": 3, "arch-010": 3},
+      "hard_negatives": ["sup-011", "arch-011", "ops-008", "str-008"],
+      "reference_answer": "The capacity blueprint is exploratory, while the release record defines the deployed baseline as a native OTP release with PostgreSQL. Kafka, Kubernetes, and a vector service are not blanket requirements."
+    },
+    {
+      "id": "professional-supersession-03",
+      "category": "supersession",
+      "query": "Provisioning bug discussion: the November memo specifies a database for every workspace. ADR-018 specifies schemas in one cluster with a dedicated-database escape hatch, and the fleet console records versions per schema. What should provisioning implement?",
+      "query_timestamp": "2025-07-01T11:10:00Z",
+      "relevance": {"sup-006": 2, "sup-007": 3, "arch-003": 3, "ops-002": 1},
+      "hard_negatives": ["arch-013", "arch-012", "ops-005", "sup-010"],
+      "reference_answer": "Use schema-per-tenant at the current scale. The later architecture record superseded the one-database-per-tenant memo, retaining dedicated databases only as an escape hatch."
+    },
+    {
+      "id": "professional-supersession-04",
+      "category": "supersession",
+      "query": "Integration review: one design record lets each entrypoint maintain its own approval state machine with separate retry semantics. Another record centralizes transition rules behind a shared core with thin entrypoint adapters for auth and request shaping. Which approach should the refactor adopt, and what evidence distinguishes them?",
+      "query_timestamp": "2025-07-01T11:15:00Z",
+      "relevance": {"sup-008": 2, "dep-001": 3, "dep-002": 3, "dep-009": 2},
+      "hard_negatives": ["dep-010", "dep-012", "ops-001", "dep-003"],
+      "reference_answer": "The shared workflow with consumer adapters is the approved design. The per-consumer forks encoded transitions and idempotency keys independently, causing divergence that was only caught at integration. Adapters now translate authentication, request shape, and presentation while the shared workflow owns invariants and stores one canonical operation identity."
+    },
+    {
+      "id": "professional-supersession-05",
+      "category": "supersession",
+      "query": "Finance meeting: one artifact labels the analytics warehouse as the invoice system of record. Another artifact describes warehouse updates as asynchronous projections while transactional PostgreSQL serves billing and authorization. How should reconciliation resolve the mismatch?",
+      "query_timestamp": "2025-07-01T11:20:00Z",
+      "relevance": {"sup-009": 3, "arch-012": 3, "dep-010": 2},
+      "hard_negatives": ["sup-010", "arch-013", "str-009", "dep-001"],
+      "reference_answer": "Reconciliation should follow transactional PostgreSQL. The dashboard label was corrected during implementation review, and the warehouse remains an asynchronous analytical projection."
+    },
+    {
+      "id": "professional-multi-hop-dependency-01",
+      "category": "multi-hop-dependency",
+      "query": "Bug triage: admin, import, and partner requests disagree on whether `reviewed` may become `queued`, and retries create duplicate operations under different keys. What sequence of changes removes both kinds of drift?",
+      "query_timestamp": "2025-07-01T12:00:00Z",
+      "relevance": {"dep-001": 3, "dep-002": 3, "dep-009": 3},
+      "hard_negatives": ["dep-010", "arch-007", "ops-001", "dep-011"],
+      "reference_answer": "Extract one domain workflow owning transitions and invariants. Keep thin consumer adapters for authentication, request and presentation translation, and normalize their idempotency keys to one canonical operation identity."
+    },
+    {
+      "id": "professional-multi-hop-dependency-02",
+      "category": "multi-hop-dependency",
+      "query": "Test channel: the suite passes serially but parallel runs reuse process names, see another case's rows, and sometimes write after teardown. Which ownership boundaries have to move together?",
+      "query_timestamp": "2025-07-01T12:05:00Z",
+      "relevance": {"dep-003": 3, "dep-004": 3},
+      "hard_negatives": ["arch-004", "inc-007", "ops-002", "sup-010"],
+      "reference_answer": "Give each test a unique sandbox owner, tenant, registry scope, and supervised tree. Transfer sandbox ownership only to supervised children; detached tasks can outlive the test and use a checked-in connection."
+    },
+    {
+      "id": "professional-multi-hop-dependency-03",
+      "category": "multi-hop-dependency",
+      "query": "Messaging design thread: one alert went to three workers, a fourth joined later, and only one original worker needs a retry. Product still wants an auditable answer to 'is this alert finished?' How should the records and completion rule work?",
+      "query_timestamp": "2025-07-01T12:10:00Z",
+      "relevance": {"dep-005": 3, "dep-006": 3, "dep-007": 3},
+      "hard_negatives": ["dep-011", "dep-010", "ops-001", "str-008"],
+      "reference_answer": "Freeze recipients when send is accepted and keep receipts per message-recipient pair. Complete only when every frozen recipient is terminal; retries update only that recipient's attempt history."
+    },
+    {
+      "id": "professional-multi-hop-dependency-04",
+      "category": "multi-hop-dependency",
+      "query": "Disaster drill: the database snapshot restored cleanly, but attachments are absent and reporting totals disagree with accepted workflow decisions. Which recovery sequence proves the rebuilt environment is coherent before traffic returns?",
+      "query_timestamp": "2025-07-01T12:15:00Z",
+      "relevance": {"dep-012": 2, "ops-014": 3, "ops-016": 3, "ops-009": 2, "ops-001": 1},
+      "hard_negatives": ["ops-005", "inc-007", "ops-003", "dep-011"],
+      "reference_answer": "Restore both relational and object data in an isolated network, then replay the transactional outbox from its checkpoint. Compare business rows, object digests, and projection checkpoints with deterministic acceptance queries before enabling traffic."
+    },
+    {
+      "id": "professional-multi-hop-dependency-05",
+      "category": "multi-hop-dependency",
+      "query": "Partner escalation: the API returned approved, the reporting screen still says pending, and a repair job wants to submit the approval again. Which records settle the truth, and how should the lag be handled?",
+      "query_timestamp": "2025-07-01T12:20:00Z",
+      "relevance": {"dep-002": 1, "dep-009": 3, "dep-010": 3, "dep-012": 3, "arch-012": 1, "dep-001": 1},
+      "hard_negatives": ["inc-011", "dep-003", "dep-011", "ops-003"],
+      "reference_answer": "The workflow decision's authoritative row and outbox event, committed in one transaction, settle the approval. The reporting projection lags because it consumes events asynchronously and must not block or retry the operation. The repair job should check the canonical idempotency identity rather than resubmitting."
+    },
+    {
+      "id": "professional-operational-constraint-01",
+      "category": "operational-constraint",
+      "query": "Change request: release 42 touches every workspace, but operations needs a stop condition after bad tenants and a way to resume tomorrow without rerunning successful work. What must the rollout record?",
+      "query_timestamp": "2025-07-01T13:00:00Z",
+      "relevance": {"arch-003": 2, "ops-001": 3, "ops-002": 3},
+      "hard_negatives": ["ops-009", "sup-006", "arch-013", "inc-011"],
+      "reference_answer": "Apply centrally versioned migrations per schema with bounded concurrency, durable per-tenant status, idempotent resume, and a fleet pause when failures cross a threshold."
+    },
+    {
+      "id": "professional-operational-constraint-02",
+      "category": "operational-constraint",
+      "query": "On-call handover: last night's archive job is green, but nobody has demonstrated that the service can be rebuilt from it. What evidence closes the recovery task?",
+      "query_timestamp": "2025-07-01T13:05:00Z",
+      "relevance": {"ops-009": 3, "ops-014": 2, "ops-001": 1},
+      "hard_negatives": ["inc-012", "ops-003", "ops-005", "inc-011"],
+      "reference_answer": "Restore the archive into an isolated environment and replay deterministic acceptance queries. Archive-upload success alone is not recovery evidence, and the exercise should be repeatable without mutating production."
+    },
+    {
+      "id": "professional-operational-constraint-03",
+      "category": "operational-constraint",
+      "query": "Release-room note: tenant jobs run for several minutes while a rolling OTP upgrade replaces BEAM nodes. Operations cannot drop live sessions or let an abandoned lease execute twice. What sequence and signals should gate each node?",
+      "query_timestamp": "2025-07-01T13:10:00Z",
+      "relevance": {"ops-013": 3, "ops-001": 2, "ops-011": 2},
+      "hard_negatives": ["arch-011", "dep-004", "ops-002", "ops-008"],
+      "reference_answer": "Drain one node at a time: remove it from new-session routing, stop workers claiming jobs, checkpoint or hand off durable leases, and allow bounded graceful supervisor shutdown. Resume interrupted work from its lease, and advance only when session, queue, health, and duplicate-execution signals pass the watch gate."
+    },
+    {
+      "id": "professional-operational-constraint-04",
+      "category": "operational-constraint",
+      "query": "Canary review: the new release has already written an expanded record shape, then a regression appeared while most hosts still run the old binary. What evidence decides between rollback and a forward fix?",
+      "query_timestamp": "2025-07-01T13:15:00Z",
+      "relevance": {"ops-015": 3, "ops-011": 2, "ops-002": 1},
+      "hard_negatives": ["inc-009", "inc-010", "ops-006", "inc-011"],
+      "reference_answer": "Run the prior binary's compatibility probe against records written by the canary. Roll back only if it can safely read and write them; otherwise pause the wave, retain the failure evidence, and send a forward fix through the same canary success signal and watch period."
+    },
+    {
+      "id": "professional-operational-constraint-05",
+      "category": "operational-constraint",
+      "query": "Rollout review: a new routing feature is going live across the fleet. Operations wants an instant kill-switch if edge telemetry degrades, without rolling back the entire release. What controls and evidence gates should the rollout define?",
+      "query_timestamp": "2025-07-01T13:20:00Z",
+      "relevance": {"str-006": 3, "ops-011": 3, "ops-001": 2, "ops-006": 1},
+      "hard_negatives": ["ops-015", "ops-013", "arch-010", "inc-009"],
+      "reference_answer": "Gate the feature behind a runtime kill-switch so operators can disable the path without redeploying. Require a named rollback action, an observable success signal, and a bounded watch period before advancing the wave. Record CI policy status and service-health status independently so a telemetry dip triggers a pause or reversal, not a false rollback."
+    },
+    {
+      "id": "professional-strategic-decision-01",
+      "category": "strategic-decision",
+      "query": "Portfolio meeting: three internal projects each want a quarter, but only some produce components and evidence the next product can reuse. What rubric should break the tie?",
+      "query_timestamp": "2025-07-01T14:00:00Z",
+      "relevance": {"str-001": 3, "str-010": 3, "str-012": 1},
+      "hard_negatives": ["str-009", "str-013", "sup-005", "str-002"],
+      "reference_answer": "Prioritize reusable work that links product reliability, research evidence, and commercial trust. Turn shared primitives, incidents, and benchmarks into proof that strengthens later projects; deprioritize one-off customization."
+    },
+    {
+      "id": "professional-strategic-decision-02",
+      "category": "strategic-decision",
+      "query": "Product council: growth wants a checkout page for the lab system next month, while delivery says every early engagement still teaches us a different assurance pattern. What role should the system play this year?",
+      "query_timestamp": "2025-07-01T14:05:00Z",
+      "relevance": {"str-002": 3, "str-005": 2, "str-007": 2},
+      "hard_negatives": ["str-013", "str-010", "sup-005", "str-012"],
+      "reference_answer": "Treat it as an R&D and authority engine producing validated methods, public proof, and reusable assurance components. Build design partnerships before considering a self-service horizontal offer."
+    },
+    {
+      "id": "professional-strategic-decision-03",
+      "category": "strategic-decision",
+      "query": "Security questionnaire: the prospect will not send its knowledge base or model credential to a vendor account, but support still needs fleet health and configuration rollout. What offer satisfies both sides?",
+      "query_timestamp": "2025-07-01T14:10:00Z",
+      "relevance": {"str-003": 3, "str-008": 3, "str-011": 3},
+      "hard_negatives": ["arch-001", "arch-012", "str-004", "ops-008"],
+      "reference_answer": "Deploy federated per-client daemons with client-controlled retention and bring-your-own provider keys. Use a content-blind control plane for signed configuration and health summaries, avoiding centralized knowledge or credential custody."
+    },
+    {
+      "id": "professional-strategic-decision-04",
+      "category": "strategic-decision",
+      "query": "Commercial workshop: procurement asks for a per-token rate, but the pilot value came from shortening investigations and avoiding bad decisions. How should we package the first repeatable offer?",
+      "query_timestamp": "2025-07-01T14:15:00Z",
+      "relevance": {"str-004": 3, "str-005": 3, "str-007": 2},
+      "hard_negatives": ["str-013", "str-003", "str-012", "ops-004"],
+      "reference_answer": "Price around reduced investigation time, safer decisions, and retained knowledge, not tokens. Lead with reproducible authority, convert trust into design partnerships, and defer low-price self-service while integration variance is high."
+    },
+    {
+      "id": "professional-strategic-decision-05",
+      "category": "strategic-decision",
+      "query": "Partnership call: marketing wants a named customer transcript as proof, legal will allow only aggregate results, and buyers still ask whether the method is reproducible. What evidence plan moves authority forward safely?",
+      "query_timestamp": "2025-07-01T14:20:00Z",
+      "relevance": {"str-005": 3, "str-009": 3, "str-012": 2},
+      "hard_negatives": ["str-006", "arch-009", "str-013", "sup-005"],
+      "reference_answer": "Publish reproducible benchmark artifacts and sanitized aggregate operational results, never client material. Tie each release to a buyer concern and reusable capability so the evidence builds authority rather than filling a content calendar."
+    }
+  ]
+}

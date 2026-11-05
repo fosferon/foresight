@@ -1,0 +1,22 @@
+{
+  "chunk_id": "foresight-floor_doc-7_0",
+  "context": "chat",
+  "date": "2026-06-24T19:32:58.649395+00:00",
+  "document_id": "doc-7",
+  "entities": [
+    "Alice",
+    "Athens",
+    "Bob"
+  ],
+  "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+  "mentioned_at": "2026-06-24T19:32:58.649395+00:00",
+  "observation_scopes": null,
+  "occurred_end": null,
+  "occurred_start": null,
+  "tags": [
+    "beta",
+    "alpha"
+  ],
+  "text": "Alice met Bob in Athens. | Involving: Alice, Bob",
+  "type": "world"
+}

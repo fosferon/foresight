@@ -1,0 +1,50 @@
+{
+  "bank_id": "foresight-floor",
+  "operations": [
+    {
+      "id": "2",
+      "task_type": "probe_bank_migration",
+      "items_count": 0,
+      "created_at": "<timestamp>",
+      "status": "completed",
+      "error_message": null,
+      "retry_count": 0,
+      "next_retry_at": null,
+      "result_stage": "probe",
+      "result_excluded_surfaces": ["audit_log"],
+      "result_source_compatible": true,
+      "result_target_provisioned": true,
+      "result_target_migrated_version_count": 3,
+      "result_clean": true,
+      "result_has_probe_drift": false,
+      "result_probe_counts": {
+        "source_memory_unit_count": 2,
+        "target_memory_unit_count": 2
+      }
+    },
+    {
+      "id": "1",
+      "task_type": "migrate_bank",
+      "items_count": 0,
+      "created_at": "<timestamp>",
+      "status": "completed",
+      "error_message": null,
+      "retry_count": 0,
+      "next_retry_at": null,
+      "result_stage": "probe",
+      "result_excluded_surfaces": ["audit_log"],
+      "result_target_provisioned": true,
+      "result_target_migrated_version_count": 3,
+      "result_clean": true,
+      "result_has_probe_drift": false,
+      "result_has_copy_incompleteness": false,
+      "result_copy_counts": {
+        "copied_banks": 1,
+        "copied_memory_units": 2
+      }
+    }
+  ],
+  "total": 2,
+  "limit": 10,
+  "offset": 0
+}

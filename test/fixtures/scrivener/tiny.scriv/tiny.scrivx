@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrivenerProject Identifier="TINY-SCRIVENER-FIXTURE" Version="2.0">
+  <Binder>
+    <BinderItem UUID="DRAFT" Type="DraftFolder">
+      <Title>Manuscript</Title>
+      <Children>
+        <BinderItem UUID="CHAPTER-1" Type="Folder">
+          <Title>Κεφάλαιο Α</Title>
+          <Children>
+            <BinderItem UUID="SCENE-1" Type="Text">
+              <Title>Σκηνή πρώτη</Title>
+              <MetaData>
+                <Synopsis>Περίληψη πρώτης σκηνής</Synopsis>
+                <LabelID>7</LabelID>
+              </MetaData>
+              <Keywords>
+                <KeywordID>3</KeywordID>
+              </Keywords>
+            </BinderItem>
+            <BinderItem UUID="EMPTY-SCENE" Type="Text">
+              <Title>Άδεια σκηνή</Title>
+            </BinderItem>
+          </Children>
+        </BinderItem>
+        <BinderItem UUID="CHAPTER-2" Type="Folder">
+          <Title>Κεφάλαιο Β</Title>
+          <Children>
+            <BinderItem UUID="SCENE-2" Type="Text">
+              <Title>Σκηνή δεύτερη</Title>
+            </BinderItem>
+          </Children>
+        </BinderItem>
+      </Children>
+    </BinderItem>
+    <BinderItem UUID="RESEARCH" Type="Folder">
+      <Title>Research</Title>
+      <Children>
+        <BinderItem UUID="RESEARCH-TEXT" Type="Text">
+          <Title>Not in manuscript</Title>
+        </BinderItem>
+      </Children>
+    </BinderItem>
+    <BinderItem UUID="TRASH" Type="Folder">
+      <Title>Trash</Title>
+      <Children>
+        <BinderItem UUID="TRASH-TEXT" Type="Text">
+          <Title>Trash text</Title>
+        </BinderItem>
+      </Children>
+    </BinderItem>
+  </Binder>
+</ScrivenerProject>

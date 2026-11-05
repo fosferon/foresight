@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "bank_id": "foresight-floor",
+  "async": true,
+  "operation_id": "1",
+  "operation_ids": [
+    "1"
+  ]
+}

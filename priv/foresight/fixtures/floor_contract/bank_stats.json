@@ -1,0 +1,32 @@
+{
+  "bank_id": "foresight-floor",
+  "total_nodes": 12,
+  "total_links": 52,
+  "total_documents": 1,
+  "nodes_by_fact_type": {
+    "observation": 6,
+    "world": 6
+  },
+  "links_by_link_type": {
+    "semantic": 22,
+    "temporal": 30
+  },
+  "links_by_fact_type": {
+    "world": 52
+  },
+  "links_breakdown": {
+    "world": {
+      "semantic": 22,
+      "temporal": 30
+    }
+  },
+  "pending_operations": 0,
+  "failed_operations": 0,
+  "operations_by_status": {
+    "completed": 1
+  },
+  "last_consolidated_at": "2026-06-02T08:11:34.054764+00:00",
+  "pending_consolidation": 0,
+  "failed_consolidation": 0,
+  "total_observations": 6
+}

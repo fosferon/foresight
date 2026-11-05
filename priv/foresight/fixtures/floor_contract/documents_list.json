@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "id": "doc-7",
+      "bank_id": "foresight-floor",
+      "content_hash": "704e1fcf7d76dee2100b848929951e1a9f0cc539e7d656a36a86c7d42564e0f1",
+      "created_at": "2026-06-02T08:11:32.283230+00:00",
+      "updated_at": "2026-06-02T08:11:34.186884+00:00",
+      "text_length": 40,
+      "memory_unit_count": 6,
+      "retain_params": {
+        "context": "chat",
+        "metadata": {
+          "source": "fixture-async"
+        }
+      },
+      "document_metadata": {
+        "source": "fixture-async"
+      },
+      "tags": [
+        "alpha",
+        "beta"
+      ]
+    }
+  ],
+  "total": 1,
+  "limit": 100,
+  "offset": 0
+}

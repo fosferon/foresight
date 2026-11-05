@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "id": "c58ac92b-2a6f-44d6-865c-6b241707d49b",
+      "canonical_name": "Narrator",
+      "mention_count": 2,
+      "first_seen": "2026-06-02T08:11:31.280984+00:00",
+      "last_seen": "2026-06-02T08:11:34.124003+00:00",
+      "metadata": {}
+    },
+    {
+      "id": "aed51fda-3509-4455-84c3-14ae0a4605e6",
+      "canonical_name": "Context",
+      "mention_count": 2,
+      "first_seen": "2026-06-02T08:11:31.260984+00:00",
+      "last_seen": "2026-06-02T08:11:34.104003+00:00",
+      "metadata": {}
+    },
+    {
+      "id": "450b9b05-b4dc-4ccd-be9f-30e316b13f1b",
+      "canonical_name": "Event",
+      "mention_count": 2,
+      "first_seen": "2026-06-02T08:11:31.250984+00:00",
+      "last_seen": "2026-06-02T08:11:34.094003+00:00",
+      "metadata": {}
+    }
+  ],
+  "total": 8,
+  "limit": 3,
+  "offset": 1
+}

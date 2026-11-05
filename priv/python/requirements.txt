@@ -1,0 +1,19 @@
+# Python dependencies for the local ML worker (sentence_transformers_worker.py).
+# Install into the venv referenced by FORESIGHT_ML_PYTHON, e.g.:
+#   ~/.cache/foresight-ml-venv/bin/pip install -r priv/python/requirements.txt
+#
+# Versions intentionally unpinned for torch/sentence-transformers so each host can
+# match its accelerator (MPS/CUDA/CPU); pin in a lockfile per deployment if needed.
+#
+# transformers 5.x keeps CPU weights memory-mapped from the checkpoint; on macOS/arm64
+# that made the cross-encoder return NaN on CPU. The worker copies CPU weights out of
+# the mmap after loading (see _materialize_cpu_weights), so no pin is required.
+
+torch
+# >= 4: the worker builds the cross-encoder with the `activation_fn` / `model_kwargs`
+# constructor so it always scores raw logits (see _load_reranker).
+sentence-transformers>=4
+
+# Multilingual query temporal extraction — dateparser.search_dates
+# powers the 200+ language single-date tail (incl. Greek) behind Foresight.Recall.QueryAnalyzer.
+dateparser>=1.4

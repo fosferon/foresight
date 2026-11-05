@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "bank_id": "foresight-floor",
+      "content": "Lead with evidence.",
+      "created_at": "2026-07-02T08:25:12.241335+00:00",
+      "id": "43661200-3c74-41bc-bc20-17a0ead3253a",
+      "is_active": true,
+      "name": "Fixture Directive",
+      "priority": 3,
+      "tags": [
+        "alpha"
+      ],
+      "updated_at": "2026-07-02T08:25:12.241335+00:00"
+    }
+  ]
+}

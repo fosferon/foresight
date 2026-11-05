@@ -1,0 +1,18 @@
+{
+  "banks": [
+    {
+      "bank_id": "foresight-floor",
+      "name": "Foresight FLOOR",
+      "disposition": {
+        "skepticism": 3,
+        "literalism": 3,
+        "empathy": 3
+      },
+      "mission": "",
+      "created_at": "2026-06-02T08:11:31.218266+00:00",
+      "updated_at": "2026-06-02T08:11:34.068154+00:00",
+      "fact_count": 12,
+      "last_document_at": "2026-06-02T08:11:32.283230+00:00"
+    }
+  ]
+}

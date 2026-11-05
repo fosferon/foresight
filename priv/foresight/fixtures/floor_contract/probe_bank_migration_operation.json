@@ -1,0 +1,57 @@
+{
+  "operation_id": "1",
+  "status": "completed",
+  "operation_type": "probe_bank_migration",
+  "created_at": "<timestamp>",
+  "updated_at": "<timestamp>",
+  "completed_at": "<timestamp>",
+  "error_message": null,
+  "retry_count": 0,
+  "next_retry_at": null,
+  "task_payload": {
+    "source_prefix": "tenant_source",
+    "target_prefix": "tenant_target",
+    "bank_id": "foresight-floor",
+    "async": false
+  },
+  "result_stage": "probe",
+  "result_clean": true,
+  "result_excluded_surfaces": [
+    "audit_log"
+  ],
+  "result_has_probe_drift": false,
+  "result_probe_counts": {
+    "source_memory_unit_count": 2,
+    "target_memory_unit_count": 2
+  },
+  "result_source_compatible": true,
+  "result_target_provisioned": true,
+  "result_target_migrated_version_count": 3,
+  "result": {
+    "bank_id": "foresight-floor",
+    "source_prefix": "tenant_source",
+    "target_prefix": "tenant_target",
+    "migration_policy": {
+      "excluded_surfaces": [
+        "audit_log"
+      ]
+    },
+    "target_provisioned": {
+      "prefix": "tenant_target",
+      "migrated_versions": [
+        1,
+        2,
+        3
+      ]
+    },
+    "source_audit": {
+      "prefix": "tenant_source",
+      "compatible?": true
+    },
+    "parity_probe": {
+      "clean?": true,
+      "source_memory_unit_count": 2,
+      "target_memory_unit_count": 2
+    }
+  }
+}

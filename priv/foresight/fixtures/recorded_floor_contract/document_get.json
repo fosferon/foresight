@@ -1,0 +1,27 @@
+{
+  "bank_id": "foresight-floor",
+  "content_hash": "e622b966684be3c642094a2e5654bbd0dfd3cb1e2311335215c93a0d95aa4588",
+  "created_at": "2026-06-24T19:33:01.472732+00:00",
+  "document_metadata": {
+    "source": "fixture-seed"
+  },
+  "id": "doc-7",
+  "memory_unit_count": 1,
+  "nodes_by_fact_type": {
+    "experience": 0,
+    "observation": 0,
+    "world": 1
+  },
+  "original_text": "Alice met Bob in Athens. hello from foresight floor seed",
+  "retain_params": {
+    "context": "chat",
+    "metadata": {
+      "source": "fixture-seed"
+    }
+  },
+  "tags": [
+    "beta",
+    "alpha"
+  ],
+  "updated_at": "2026-06-24T19:33:01.472732+00:00"
+}

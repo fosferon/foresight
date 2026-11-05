@@ -1,0 +1,19 @@
+{
+  "bank_id": "foresight-floor",
+  "operations": [
+    {
+      "id": "1",
+      "task_type": "retain",
+      "items_count": 1,
+      "created_at": "<timestamp>",
+      "status": "completed",
+      "error_message": null,
+      "retry_count": 0,
+      "next_retry_at": null,
+      "result_items_count": 1
+    }
+  ],
+  "total": 1,
+  "limit": 10,
+  "offset": 0
+}

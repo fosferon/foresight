@@ -1,0 +1,11 @@
+{
+  "bank_id": "foresight-floor",
+  "name": "Foresight FLOOR",
+  "disposition": {
+    "skepticism": 3,
+    "literalism": 3,
+    "empathy": 3
+  },
+  "mission": "Record live contract fixtures",
+  "background": "Record live contract fixtures"
+}

@@ -1,0 +1,128 @@
+{
+  "based_on": {
+    "directives": [],
+    "memories": [
+      {
+        "context": "chat",
+        "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+        "occurred_end": null,
+        "occurred_start": null,
+        "text": "Alice met Bob in Athens. | Involving: Alice, Bob",
+        "type": "world"
+      },
+      {
+        "context": null,
+        "id": "b640a88d-64e0-45d2-aba7-544ba73032e0",
+        "occurred_end": null,
+        "occurred_start": null,
+        "text": "Alice met Bob in Athens.",
+        "type": "observation"
+      }
+    ],
+    "mental_models": []
+  },
+  "structured_output": null,
+  "text": "Hello! How can I help you today?",
+  "trace": {
+    "llm_calls": [
+      {
+        "duration_ms": 2861,
+        "scope": "agent_1"
+      },
+      {
+        "duration_ms": 2609,
+        "scope": "agent_2"
+      },
+      {
+        "duration_ms": 1656,
+        "scope": "agent_3"
+      }
+    ],
+    "tool_calls": [
+      {
+        "duration_ms": 236,
+        "input": {
+          "query": "user greeting introduction",
+          "reason": "User said hello, checking for any relevant context about this user",
+          "tool": "search_observations"
+        },
+        "iteration": 1,
+        "output": {
+          "count": 1,
+          "freshness": "up_to_date",
+          "is_stale": false,
+          "observations": [
+            {
+              "chunk_id": null,
+              "context": null,
+              "document_id": null,
+              "entities": null,
+              "fact_type": "observation",
+              "id": "b640a88d-64e0-45d2-aba7-544ba73032e0",
+              "mentioned_at": "2026-06-24T19:32:58.649395+00:00",
+              "metadata": {},
+              "occurred_end": null,
+              "occurred_start": null,
+              "source_fact_ids": null,
+              "tags": [
+                "beta",
+                "alpha"
+              ],
+              "text": "Alice met Bob in Athens."
+            }
+          ],
+          "query": "user greeting introduction",
+          "source_facts": {}
+        },
+        "tool": "search_observations"
+      },
+      {
+        "duration_ms": 266,
+        "input": {
+          "query": "user profile preferences background",
+          "reason": "Looking for any stored information about the user to personalize the greeting",
+          "tool": "recall"
+        },
+        "iteration": 2,
+        "output": {
+          "chunks": {
+            "foresight-floor_doc-7_0": {
+              "chunk_index": 0,
+              "chunk_text": "Alice met Bob in Athens. hello from foresight floor seed",
+              "truncated": false
+            }
+          },
+          "memories": [
+            {
+              "chunk_id": "foresight-floor_doc-7_0",
+              "context": "chat",
+              "document_id": "doc-7",
+              "entities": null,
+              "fact_type": "world",
+              "id": "dcf8e008-9f4e-4e74-8472-fe480d81c1c5",
+              "mentioned_at": "2026-06-24T19:32:58.649395+00:00",
+              "metadata": {
+                "source": "fixture-seed"
+              },
+              "occurred_end": null,
+              "occurred_start": null,
+              "source_fact_ids": null,
+              "tags": [
+                "beta",
+                "alpha"
+              ],
+              "text": "Alice met Bob in Athens. | Involving: Alice, Bob"
+            }
+          ],
+          "query": "user profile preferences background"
+        },
+        "tool": "recall"
+      }
+    ]
+  },
+  "usage": {
+    "input_tokens": 6649,
+    "output_tokens": 214,
+    "total_tokens": 6863
+  }
+}

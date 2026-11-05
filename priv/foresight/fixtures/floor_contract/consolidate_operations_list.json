@@ -1,0 +1,21 @@
+{
+  "bank_id": "foresight-floor",
+  "operations": [
+    {
+      "id": "1",
+      "task_type": "consolidate",
+      "items_count": 0,
+      "created_at": "<timestamp>",
+      "status": "completed",
+      "error_message": null,
+      "retry_count": 0,
+      "next_retry_at": null,
+      "result_operation": "consolidate",
+      "result_observations_created": 0,
+      "result_scopes_consolidated": 0
+    }
+  ],
+  "total": 1,
+  "limit": 10,
+  "offset": 0
+}

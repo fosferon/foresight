@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: Elixir ${{ matrix.elixir }} (OTP ${{ matrix.otp }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - elixir: "1.19"
+            otp: "27"
+          - elixir: "1.19"
+            otp: "28"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: erlef/setup-beam@v1
+        with:
+          elixir-version: ${{ matrix.elixir }}
+          otp-version: ${{ matrix.otp }}
+
+      - name: Restore deps and build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-mix-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-${{ matrix.elixir }}-${{ matrix.otp }}-
+
+      # The test lanes and the package-consumer check start their own throwaway
+      # PostgreSQL with initdb/pg_ctl and need the pgvector extension (halfvec, so
+      # pgvector 0.7 or later, from the PostgreSQL project's apt repository).
+      - name: PostgreSQL 16 with pgvector
+        run: |
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y postgresql-16 postgresql-16-pgvector
+          echo /usr/lib/postgresql/16/bin >> "$GITHUB_PATH"
+
+      - run: mix deps.get --only test
+
+      - run: ./scripts/test-package-consumer.sh
+
+      # The one gate a consumer is told to run: format check, compile with
+      # warnings as errors, the three architectural fitness checks, then the
+      # default test lane (tier2/nightly/ml stay opt-in locally).
+      - run: mix ci

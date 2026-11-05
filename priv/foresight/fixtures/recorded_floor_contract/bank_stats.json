@@ -1,0 +1,29 @@
+{
+  "bank_id": "foresight-floor",
+  "failed_consolidation": 0,
+  "failed_operations": 0,
+  "last_consolidated_at": null,
+  "links_breakdown": {
+    "world": {
+      "semantic": 1
+    }
+  },
+  "links_by_fact_type": {
+    "world": 1
+  },
+  "links_by_link_type": {
+    "semantic": 1
+  },
+  "nodes_by_fact_type": {
+    "world": 1
+  },
+  "operations_by_status": {
+    "processing": 1
+  },
+  "pending_consolidation": 1,
+  "pending_operations": 0,
+  "total_documents": 1,
+  "total_links": 1,
+  "total_nodes": 1,
+  "total_observations": 0
+}

@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "canonical_name": "Athens",
+      "first_seen": "2026-06-24T19:32:58.649395+00:00",
+      "id": "4db9cf55-a2d9-455e-bba5-bdf5bdd85bd6",
+      "last_seen": "2026-06-24T19:32:58.649395+00:00",
+      "mention_count": 1,
+      "metadata": {}
+    },
+    {
+      "canonical_name": "Bob",
+      "first_seen": "2026-06-24T19:32:58.649395+00:00",
+      "id": "8b1c4786-34d4-4ac6-9376-8f4352fba327",
+      "last_seen": "2026-06-24T19:32:58.649395+00:00",
+      "mention_count": 1,
+      "metadata": {}
+    }
+  ],
+  "limit": 3,
+  "offset": 1,
+  "total": 3
+}

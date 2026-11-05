@@ -1,0 +1,27 @@
+{
+  "bank_id": "foresight-floor",
+  "source_prefix": "tenant_source",
+  "target_prefix": "tenant_target",
+  "migration_policy": {
+    "excluded_surfaces": [
+      "audit_log"
+    ]
+  },
+  "target_provisioned": {
+    "prefix": "tenant_target",
+    "migrated_versions": [
+      1,
+      2,
+      3
+    ]
+  },
+  "source_audit": {
+    "prefix": "tenant_source",
+    "compatible?": true
+  },
+  "parity_probe": {
+    "clean?": true,
+    "source_memory_unit_count": 2,
+    "target_memory_unit_count": 2
+  }
+}
